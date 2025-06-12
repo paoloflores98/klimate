@@ -8,8 +8,8 @@ function App() {
 
   return (
     <BrowserRouter>
-      <ThemeProvider defaultTheme='system'>
-        <Layout>
+      <ThemeProvider defaultTheme='dark' storageKey="vite-ui-theme">
+        <Layout> {/* Componente */}
           <Routes>
             <Route path='/' element={<WeatherDashboard />} />
             <Route path='/city/:cityName' element={<CityPage />} />
