@@ -1,17 +1,25 @@
+import CurrentWeather from "@/components/current-weather"
 import WeatherSkeleton from "@/components/loading-skeleton"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { useGeolocation } from "@/hooks/use-geolocation"
+import { useWeatherQuery, useForecastQuery, useReverseGeocodeQuery } from "@/hooks/use-weather"
 import { AlertTriangle, MapPin, RefreshCw } from "lucide-react"
 
 export const WeatherDashboard = () => {
   const { coordinates, getLocation, isLoading: locationLoading, error: locationError } = useGeolocation()
 
+  const weatherQuery = useWeatherQuery(coordinates)
+  const forecastQuery = useForecastQuery(coordinates)
+  const locationQuery = useReverseGeocodeQuery(coordinates)
+
   const handleRefresh = () => {
     getLocation()
 
     if (coordinates) {
-
+      weatherQuery.refetch() // Forzar la actualización de los datos
+      forecastQuery.refetch()
+      locationQuery.refetch()
     }
   }
 
@@ -52,10 +60,33 @@ export const WeatherDashboard = () => {
       </Alert>
     )
   }
-  
+
+  const locationName = locationQuery.data?.[0]
+
+  if (weatherQuery.error || forecastQuery.error) {
+    return (
+      <Alert variant="destructive">
+        <AlertTriangle className="h-4 w-4" />
+        <AlertTitle>Error</AlertTitle>
+        <AlertDescription className="flex flex-col gap-4">
+          <p>No se han podido obtener los datos meteorológicos. Inténtalo de nuevo.</p>
+          {/* <Button variant="outline" onClick={handleRefresh} className="w-fit">
+            <RefreshCw className="mr-2 h-4 w-4" />
+            Reintentar
+          </Button> */}
+        </AlertDescription>
+      </Alert>
+    )
+  }
+
+  if (!weatherQuery.data || !forecastQuery.data) {
+    return <WeatherSkeleton /> // Componente
+  }
+
   return (
     <div className="space-y-4">
       {/* Ciudades favoritas */}
+      {/* Aquí irá un componente */}
 
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-bold tracking-tight">Mi ubicación</h1>
@@ -63,16 +94,35 @@ export const WeatherDashboard = () => {
           variant="outline"
           size="icon"
           onClick={handleRefresh}
-        // disabled={weatherQuery.isFetching || forecastQuery.isFetching}
+          disabled={weatherQuery.isFetching || forecastQuery.isFetching}
         >
-          <RefreshCw
-            // className={`h-4 w-4 ${weatherQuery.isFetching ? "animate-spin" : ""}`}
-            className={`h-4 w-4`}
-          />
+          <RefreshCw className={`h-4 w-4 ${weatherQuery.isFetching ? "animate-spin" : ""}`} />
         </Button>
       </div>
 
       {/* Clima actual y horario */}
+      <div className="grid gap-6">
+        <div className="flex flex-col lg:flex-row gap-4">
+          {/* Clima actual */}
+          <CurrentWeather // Componente
+            data={weatherQuery.data}
+            locationName={locationName}
+          />
+
+          {/* Temperatura por hora */}
+
+
+          {/* <HourlyTemperature data={forecastQuery.data} /> */}
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2 items-start">
+          {/* Detalles  */}
+          {/* <WeatherDetails data={weatherQuery.data} /> */}
+
+          {/* Previsión */}
+          {/* <WeatherForecast data={forecastQuery.data} /> */}
+        </div>
+      </div>
     </div>
   )
 }

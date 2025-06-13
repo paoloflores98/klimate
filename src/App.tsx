@@ -6,7 +6,23 @@ import CityPage from './pages/city-page'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
-const queryClient = new QueryClient()
+
+/**
+ * staleTime: Los datos de las consultas se consideran frescos durante 5 minutos.
+ * gcTime: Los datos en caché se eliminan después de 10 minutos si no se usan.
+ * retry: No se reintenta automáticamente una consulta fallida.
+ * refetchOnWindowFocus: No se vuelve a consultar automáticamente al enfocar la ventana.
+ */
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000, // 5 minutos
+      gcTime: 10 * 60 * 1000, // 10 minutos
+      retry: false,
+      refetchOnWindowFocus: false,
+    },
+  }
+})
 
 function App() {
   return (
