@@ -14,9 +14,8 @@ export default function CurrentWeather({ data, locationName }: CurrentWeatherPro
     wind: { speed },
   } = data
 
-
   // Formato de temperatura
-  const formatTemp = (temp: number) => `${Math.round(temp)}°`
+  const formatTemp = (temp: number) => `${Math.round(temp)}°` // Ej.: 25.5 se convierte en "26°"
 
   return (
     <Card className="overflow-hidden">

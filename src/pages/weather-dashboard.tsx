@@ -1,4 +1,5 @@
 import CurrentWeather from "@/components/current-weather"
+import HourlyTemperature from "@/components/hourly-temprature"
 import WeatherSkeleton from "@/components/loading-skeleton"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
@@ -110,9 +111,9 @@ export const WeatherDashboard = () => {
           />
 
           {/* Temperatura por hora */}
-
-
-          {/* <HourlyTemperature data={forecastQuery.data} /> */}
+          <HourlyTemperature // Componente
+            data={forecastQuery.data}
+          />
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 items-start">
