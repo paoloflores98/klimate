@@ -15,10 +15,19 @@ export function WeatherDetails({ data }: WeatherDetailsProps) {
     return format(new Date(timestamp * 1000), "h:mm a")
   }
 
-  // Convertir grados de viento a dirección
+  /*
+  Convierte los grados del viento en una dirección cardinal. Ejemplo:
+  1. degree = -68
+  2. degree %= 360 = -68 % 360 = -68
+  3. -68 + 360 = 292
+  4. 292 / 45 = 6.488...
+  5. Math.round(6.488...) = 6
+  6. 6 % 8 = 6
+  7. directions[6] = "Oeste"
+  */
   const getWindDirection = (degree: number) => {
-    const directions = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"]
-    const index = Math.round(((degree %= 360) < 0 ? degree + 360 : degree) / 45) % 8 // Ejemplo: 0° = N, 45° = NE, 90° = E, etc
+    const directions = ["Norte", "Noreste", "Este", "Sureste", "Sur", "Suroeste", "Oeste", "Noroeste"]
+    const index = Math.round(((degree %= 360) < 0 ? degree + 360 : degree) / 45) % 8
 
     return directions[index]
   }
