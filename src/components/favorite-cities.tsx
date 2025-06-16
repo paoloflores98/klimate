@@ -1,4 +1,3 @@
-// src/components/weather/favorite-cities.tsx
 import { useNavigate } from "react-router-dom"
 import { useWeatherQuery } from "@/hooks/use-weather"
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
@@ -78,7 +77,6 @@ function FavoriteCityTablet({ id, name, lat, lon, onRemove }: FavoriteCityTablet
           : null
         )
       }
-
     </div>
   )
 }
