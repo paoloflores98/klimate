@@ -55,19 +55,22 @@ class WeatherAPI {
       lat: lat.toString(),
       lon: lon.toString(),
       limit: "1",
+      lang: "es",
     })
     
     return this.fetchData<GeocodingResponse[]>(url)
   }
 
   // Buscar ubicaciones por nombre y retorna posibles coincidencias
-  // async searchLocations(query: string): Promise<GeocodingResponse[]> {
-  //   const url = this.createUrl(`${API_CONFIG.GEO}/direct`, {
-  //     q: query,
-  //     limit: "5",
-  //   })
-  //   return this.fetchData<GeocodingResponse[]>(url)
-  // }
+  async searchLocations(query: string): Promise<GeocodingResponse[]> {
+    const url = this.createUrl(`${API_CONFIG.GEO}/direct`, {
+      q: query,
+      limit: "5",
+      lang: "es",
+    })
+
+    return this.fetchData<GeocodingResponse[]>(url)
+  }
 }
 
 export const weatherAPI = new WeatherAPI()

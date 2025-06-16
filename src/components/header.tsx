@@ -1,6 +1,7 @@
-import { Link } from "react-router-dom";
-import { useTheme } from "./context/theme-provider";
-import { Moon, Sun } from "lucide-react";
+import { Link } from "react-router-dom"
+import { useTheme } from "./context/theme-provider"
+import { Moon, Sun } from "lucide-react"
+import CitySearch from "./city-search"
 
 export default function Header() {
   const { theme, setTheme } = useTheme()
@@ -17,7 +18,7 @@ export default function Header() {
         </Link>
 
         <div className="flex gap-4">
-          {/* <CitySearch /> */}
+          <CitySearch /> {/* Componente */}
 
           {/* <ThemeToggle /> */}
 

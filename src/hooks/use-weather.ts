@@ -21,7 +21,7 @@ export function useWeatherQuery(coordinates: Coordinates | null) {
 // Consultar el pronóstico del clima para unas coordenadas dadas
 export function useForecastQuery(coordinates: Coordinates | null) {
   return useQuery({
-    queryKey: WEATHER_KEYS.forecast(coordinates ?? { lat: 0, lon: 0 }), // Llave única para cada coordenada. Ej.: ["weather", { lat: 10.4, lon: 3.2 }]
+    queryKey: WEATHER_KEYS.forecast(coordinates ?? { lat: 0, lon: 0 }), // Llave única para cada coordenada. Ej.: ["forecast", { lat: 10.4, lon: 3.2 }]
     queryFn: () => (coordinates ? weatherAPI.getForecast(coordinates) : null),
     enabled: !!coordinates, // Activar la consulta cuando coordinates tiene un valor válido
   })
@@ -30,17 +30,17 @@ export function useForecastQuery(coordinates: Coordinates | null) {
 // Obtener la información de la ubicación (como ciudad, país, etc.) para unas coordenadas dadas
 export function useReverseGeocodeQuery(coordinates: Coordinates | null) {
   return useQuery({
-    queryKey: WEATHER_KEYS.location(coordinates ?? { lat: 0, lon: 0 }), // Llave única para cada coordenada. Ej.: ["weather", { lat: 10.4, lon: 3.2 }]
+    queryKey: WEATHER_KEYS.location(coordinates ?? { lat: 0, lon: 0 }), // Llave única para cada coordenada. Ej.: ["location", { lat: 10.4, lon: 3.2 }]
     queryFn: () => coordinates ? weatherAPI.reverseGeocode(coordinates) : null,
     enabled: !!coordinates, // Activar la consulta cuando coordinates tiene un valor válido
   })
 }
 
 // Obtener la ubicación actual del usuario usando la API de geolocalización del navegador
-// export function useLocationSearch(query: string) {
-//   return useQuery({
-//     queryKey: WEATHER_KEYS.search(query),
-//     queryFn: () => weatherAPI.searchLocations(query),
-//     enabled: query.length >= 3,
-//   })
-// }
+export function useLocationSearch(query: string) {
+  return useQuery({
+    queryKey: WEATHER_KEYS.search(query), // Llave única para cada coordenada. Ej.: ["location-search", { lat: 10.4, lon: 3.2 }]
+    queryFn: () => weatherAPI.searchLocations(query),
+    enabled: query.length >= 3, // Activar la consulta cuando coordinates tiene igual o más de 3 caracteres
+  })
+}
