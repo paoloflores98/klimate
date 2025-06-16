@@ -1,5 +1,6 @@
 import type { PropsWithChildren } from "react"
 import Header from "./header"
+import { Toaster } from "./ui/sonner"
 
 
 export const Layout = ({ children }: PropsWithChildren) => {
@@ -16,6 +17,8 @@ export const Layout = ({ children }: PropsWithChildren) => {
           <p>Hecho con 💗 por Paolo Flores</p>
         </div>
       </footer>
+
+      <Toaster />
     </div>
   )
 }

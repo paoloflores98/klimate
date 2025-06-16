@@ -7,6 +7,7 @@ import { CommandSeparator } from "cmdk"
 import { useNavigate } from "react-router-dom"
 import { useSearchHistory } from "@/hooks/use-search-history"
 import { format } from "date-fns"
+import { useFavorites } from "@/hooks/use-favorite"
 
 export default function CitySearch() {
   const [open, setOpen] = useState(false)
@@ -33,6 +34,8 @@ export default function CitySearch() {
     navigate(`/city/${name}?lat=${lat}&lon=${lon}`) // Redirigir a la página de la ciudad con los parámetros de latitud y longitud
   }
 
+  const { favorites } = useFavorites() // Custom hook
+
   return (
     <>
       <Button
@@ -57,7 +60,7 @@ export default function CitySearch() {
           )}
 
           {/* Favoritos */}
-          {/* {favorites.length > 0 && (
+          {favorites.length > 0 && (
             <CommandGroup heading="Favoritos">
               {favorites.map((city) => (
                 <CommandItem
@@ -78,7 +81,7 @@ export default function CitySearch() {
                 </CommandItem>
               ))}
             </CommandGroup>
-          )} */}
+          )}
 
           {/* Búsquedas recientes */}
           {history.length > 0 && (

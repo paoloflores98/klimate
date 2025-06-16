@@ -28,7 +28,6 @@ class WeatherAPI {
     const url = this.createUrl(`${API_CONFIG.BASE_URL}/weather`, {
       lat: lat.toString(),
       lon: lon.toString(),
-      // units: "metric",
       units: API_CONFIG.DEFAULT_PARAMS.units,
       lang: "es",
     })
@@ -41,7 +40,6 @@ class WeatherAPI {
     const url = this.createUrl(`${API_CONFIG.BASE_URL}/forecast`, {
       lat: lat.toString(),
       lon: lon.toString(),
-      // units: "metric",
       units: API_CONFIG.DEFAULT_PARAMS.units,
       lang: "es",
     })
